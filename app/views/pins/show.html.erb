@@ -1,0 +1,13 @@
+
+
+<h3> pin details : </h3>
+<p> 
+<%= @pin.title %>
+</p> 
+<p> 
+<%= @pin.description %> 
+</p> 
+<p> submitted by <% if @pin.user %>  <%= @pin.user.email %> <% else %> base submition </p><% end %>  
+
+<%= link_to 'Home ', pins_path %>  <br>
+<%= link_to 'Edit',edit_pin_path %> 
