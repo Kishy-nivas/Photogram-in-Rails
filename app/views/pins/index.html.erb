@@ -1,7 +1,60 @@
-<h2 > welcome to index file </h2>
+<style>  
+ul.gallery{    
+margin-left: 3vw;     
+margin-right:3vw;  
+}    
 
-<% @pin.each do |p| %> 
-<p> <%= link_to p.title, pin_path(p) %> </p> 
+.zoom {      
+-webkit-transition: all 0.35s ease-in-out;    
+-moz-transition: all 0.35s ease-in-out;    
+transition: all 0.35s ease-in-out;     
+cursor: -webkit-zoom-in;      
+cursor: -moz-zoom-in;      
+cursor: zoom-in;  
+}     
+
+.zoom:hover,  
+.zoom:active,   
+.zoom:focus {
+/**adjust scale to desired size, 
+add browser prefixes**/
+-ms-transform: scale(2.0);    
+-moz-transform: scale(2.0);  
+-webkit-transform: scale(2.0);  
+-o-transform: scale(2.0);  
+transform: scale(2.0);    
+position:relative;      
+z-index:100;  
+}
+
+/**To keep upscaled images visible on mobile, 
+increase left & right margins a bit**/  
+@media only screen and (max-width: 640px) {   
+ul.gallery {      
+margin-left: 15vw;       
+margin-right: 15vw;
+}
+
+/**TIP: Easy escape for touch screens,
+give gallery's parent container a cursor: pointer.**/
+.DivName {cursor: pointer}
+}
+</style>
+
+<span class="label label-primary">Browse pins </span> 
+
+<% counter =0 %> 
+<% @pin.each do |p| %>  
+<% if counter % 3 ==0 %> <div class="row"> <%end %> 
+<% counter +=1 %> 
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <%= image_tag p.image_url(:index),:class => "thumbnail zoom" unless p.image.blank? %> 
+      <div class="caption">
+        <h3><%= p.title %> </h3> <h5> by <%= @users.find(p.user_id).email  if p.user_id  %>  </h5>
+        <p><%= link_to 'click to see deatils', pin_path(p),:class => "btn btn-primary",:role => "button" %></p>
+      </div>
+    </div>
+  </div>
+<% if counter%3 ==0 %> </div> <% end %> 
 <% end %> 
-
-

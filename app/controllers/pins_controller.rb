@@ -2,6 +2,7 @@ class PinsController < ApplicationController
   before_action :find_pin , only: [:show,:edit,:destroy,:update]
   def index 
     @pin = Pin.all.order("updated_at DESC")
+    @users = User.all 
   end
   
   def new
@@ -43,7 +44,7 @@ class PinsController < ApplicationController
 
   private 
   def pin_params 
-    params.require(:pin).permit(:title,:description)
+    params.require(:pin).permit(:title,:description,:image,:remote_image_url) 
   end
 
 

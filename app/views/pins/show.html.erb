@@ -1,15 +1,64 @@
+<style>  
+ul.gallery{    
+margin-left: 3vw;     
+margin-right:3vw;  
+}    
+
+.zoom {      
+-webkit-transition: all 0.35s ease-in-out;    
+-moz-transition: all 0.35s ease-in-out;    
+transition: all 0.35s ease-in-out;     
+cursor: -webkit-zoom-in;      
+cursor: -moz-zoom-in;      
+cursor: zoom-in;  
+}     
+
+.zoom:hover,  
+.zoom:active,   
+.zoom:focus {
+/**adjust scale to desired size, 
+add browser prefixes**/
+-ms-transform: scale(2.0);    
+-moz-transform: scale(2.0);  
+-webkit-transform: scale(2.0);  
+-o-transform: scale(2.0);  
+transform: scale(2.0);    
+position:relative;      
+z-index:100;  
+}
+
+/**To keep upscaled images visible on mobile, 
+increase left & right margins a bit**/  
+@media only screen and (max-width: 640px) {   
+ul.gallery {      
+margin-left: 15vw;       
+margin-right: 15vw;
+}
+
+/**TIP: Easy escape for touch screens,
+give gallery's parent container a cursor: pointer.**/
+.DivName {cursor: pointer}
+}
+</style>
+<div class="container jumbotron">
+<span class="label label-primary"> <%= @pin.title %></span>
+<blockquote> <%= @pin.description %>  </blockquote>
 
 
-<h3> pin details : </h3>
-<p> 
-<%= @pin.title %>
-</p> 
-<p> 
-<%= @pin.description %> 
-</p> 
-<p> submitted by <% if @pin.user %>  <%= @pin.user.email %> <% else %> base submition </p><% end %>  
+<%= image_tag @pin.image_url(:show),:class => "thumbnail zoom" unless @pin.image.blank? %> 
 
-<%= link_to 'Home ', pins_path %>  <br>
-<% if @pin.user_id == current_user.id  %> 
-	<%= link_to 'Edit',edit_pin_path %> 
-<% end %> 
+<!-- The Modal -->
+
+
+<p> submitted by <% if @pin.user %> <span class="label label-info"> <%= @pin.user.email %> </span> <% else %> base submition </p><% end %>  
+
+
+<% if user_signed_in? %> 
+	<% if @pin.user_id == current_user.id  %> 
+		<br/>
+		<span class ="label label-warning"> <%= link_to 'Edit',edit_pin_path %> </span>
+
+	<% end %>
+<% end %>  
+
+</div>
