@@ -37,7 +37,7 @@ class PinsController < ApplicationController
   end 
 
   def user_pin 
-    @user_pins = Pin.find(current_user.id)
+    @user_pins = Pin.where(user_id: current_user.id)
   end
 
 

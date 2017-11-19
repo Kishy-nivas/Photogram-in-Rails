@@ -10,4 +10,6 @@
 <p> submitted by <% if @pin.user %>  <%= @pin.user.email %> <% else %> base submition </p><% end %>  
 
 <%= link_to 'Home ', pins_path %>  <br>
-<%= link_to 'Edit',edit_pin_path %> 
+<% if @pin.user_id == current_user.id  %> 
+	<%= link_to 'Edit',edit_pin_path %> 
+<% end %> 

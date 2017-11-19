@@ -24,8 +24,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home  <span class="sr-only">(current)</span></a></li>
-        <% if user_signed_in? %> <li><%= link_to 'My pins',user_pin_path(current_user.id)%></li>
-        <% else %>  <li> join to create pins ! </li> <% end %> 
+        <% if user_signed_in? %> <li><%= link_to 'My pins',user_pin_path(current_user.id)%></li><% end %> 
         
       </ul>
       <form class="navbar-form navbar-left">
@@ -36,7 +35,9 @@
       </form>
       <ul class="nav navbar-nav navbar-right">
         
-        <% if user_signed_in? %> <li><a href="#"> <%= current_user.email %>  </a></li><% else %> <li><%= link_to 'login',new_user_session_path %></li> <% end %> 
+        <% if user_signed_in? %> 
+        <li><%= link_to 'new pin',new_pin_path %> </li>
+        <li><a href="#"> <%= current_user.email %>  </a></li><% else %> <li><%= link_to 'login',new_user_session_path %></li> <% end %> 
         <% if !user_signed_in? %>
         <li> <%= link_to 'Signup!', new_user_registration_path %> </li>
         <% else %> 
@@ -56,10 +57,11 @@
 </nav>
 
 
-
+<div class ="container"> 
   <body>
- <p id="notice"><%= notice %></p>
- <p id= "alert"><%= alert %></p>
+   <p id="notice"><%= notice %></p>
+   <p id= "alert"><%= alert %></p>
     <%= yield %>
   </body>
+</div>
 </html>

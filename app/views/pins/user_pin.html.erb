@@ -1,6 +1,7 @@
 <h2> My pins </h2>
 
 <% @user_pins.each do |u| %> 
-<%= u.title %> 
-<%= u.description %> 
+<p> 
+<%= link_to  u.title, pin_path(u) %> 
+</p>
 <% end %> 
