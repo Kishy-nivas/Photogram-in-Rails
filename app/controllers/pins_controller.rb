@@ -1,8 +1,10 @@
 class PinsController < ApplicationController
   before_action :find_pin , only: [:show,:edit,:destroy,:update]
+  before_action :authenticate_user!, except: [:show,:index]
+
   def index 
-    @pin = Pin.all.order("updated_at DESC")
-    @users = User.all 
+    @pin = Pin.paginate(:page => params[:page], :per_page => 9).order('created_at DESC').includes(:user)
+
   end
   
   def new
@@ -37,9 +39,17 @@ class PinsController < ApplicationController
       end  
   end 
 
+  def destroy 
+    if @pin.destroy
+      redirect_to pins_path 
+    end 
+  end 
+
+
   def user_pin 
     @user_pins = Pin.where(user_id: current_user.id)
   end
+
 
 
   private 

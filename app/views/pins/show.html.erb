@@ -62,3 +62,25 @@ give gallery's parent container a cursor: pointer.**/
 <% end %>  
 
 </div>
+
+<h4 class="breadcrumb"> comments </h4> 
+<% if @pin.comments.empty? %> 
+	<h5 class="alert alert-info">No comments so far,be the first one to start a convo !</h5> 
+<% else %> 
+	<% @pin.comments.each do |c| %> 
+	<p> 
+	 <%= c.user.email if c.user  %> says : <%= c.description %> 
+	</p>
+	<% end %>
+<% end %> 
+
+<% if !user_signed_in? %> 
+        <h5 class="alert alert-info">login or sign up to add a comment ! </h5>
+	<% else %>   
+		<div class ="form-horizontal"> 
+			<%= simple_form_for [@pin,@pin.comments.new ] do |f| %> 
+				<%= f.input :description,label: "comment" %> 
+				<%= f.submit %> 
+		     <% end %> 
+		</div> 
+	<% end %> 

@@ -51,10 +51,21 @@ give gallery's parent container a cursor: pointer.**/
     <div class="thumbnail">
       <%= image_tag p.image_url(:index),:class => "thumbnail zoom" unless p.image.blank? %> 
       <div class="caption">
-        <h3><%= p.title %> </h3> <h5> by <%= @users.find(p.user_id).email  if p.user_id  %>  </h5>
-        <p><%= link_to 'click to see deatils', pin_path(p),:class => "btn btn-primary",:role => "button" %></p>
+        <span class="label label-primary"><%= p.title %> </span> <h5> by <%= p.user.email  if p.user_id  %>  </h5>
+        <h5><%= link_to 'click to see details', pin_path(p),:class => "btn btn-primary",:role => "button" %></h5>
+         
+        <% if user_signed_in? %> 
+            <% if p.user_id == current_user.id  %> 
+            <br/>
+            <span class ="label label-warning"> <%= link_to 'Delete pin !', pin_path(p),method: :delete, data: { confirm: 'Are you sure?'}  %> </span>
+             <% end %> 
+        <% end %> 
+ 
+            
+              
       </div>
     </div>
   </div>
 <% if counter%3 ==0 %> </div> <% end %> 
 <% end %> 
+<%= will_paginate @pin %>
